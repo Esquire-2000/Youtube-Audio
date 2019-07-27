@@ -1,14 +1,16 @@
 from pytube import YouTube
 from pytube.helpers import safe_filename
 import os
+import getpass
 import subprocess
 import colorama
 from colorama import Fore, Back, Style
 colorama.init()
-
-print(Fore.YELLOW+"Welcome "+os.getlogin()+" to YouMP3"+ Style.RESET_ALL)
+if not os.path.exists('Music'):
+    os.makedirs('Music')
+print(Fore.YELLOW+"Welcome "+getpass.getuser()+" to YouMP3"+ Style.RESET_ALL)
 link=input("Enter the video URL: ")
-dwl_path="C:/Users/"+os.getlogin()+"/Music/"
+dwl_path="Music/"
 try:
 	yt=YouTube(link)
 except:
@@ -24,7 +26,7 @@ except:
 fname=(safe_filename(yt.title)) #downloaded file name
 print ("Coverting ....")
 try:
-	subprocess.call("ffmpeg.exe -loglevel panic -i \""+dwl_path+fname+".webm\" -acodec libmp3lame -b:a 320k -vn \""+dwl_path+fname+".mp3\"",shell=True) #convert to mp3
+	subprocess.call("ffmpeg -loglevel panic -i \""+dwl_path+fname+".webm\" -acodec libmp3lame -b:a 320k -vn \""+dwl_path+fname+".mp3\"",shell=True) #convert to mp3
 except:
 	print ("Error Converting file!. Make sure ffmpeg is installed.")
 print("Removing old file...")
@@ -32,5 +34,5 @@ try:
 	os.remove(dwl_path+fname+".webm") # remove old webm file
 except:
 	print ("Error accessing directory")
-print("Complete !") # test url: https://youtu.be/69yShAberPE
 print ("File(s) stored at : ",dwl_path)
+print("Complete !") # test url: https://youtu.be/69yShAberPE
