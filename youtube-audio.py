@@ -34,5 +34,5 @@ try:
 	os.remove(dwl_path+fname+".webm") # remove old webm file
 except:
 	print ("Error accessing directory")
-print ("File(s) stored at : ",dwl_path)
+print ("File(s) stored at : ",dwl_path.replace("/"," "))
 print("Complete !") # test url: https://youtu.be/69yShAberPE
